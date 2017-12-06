@@ -4,9 +4,40 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InnoviMvvm"
+        xmlns:uc="clr-namespace:InnoviMvvm.Views.UserContorls"
+        xmlns:vm="clr-namespace:InnoviMvvm.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+         Title="MainWindow" SizeToContent="WidthAndHeight" >
+
+    <Window.Resources>
+        <uc:UserData x:Key="UserData"/>
+        <uc:SwitchViewUC x:Key="SwitchUC"/>
+        <vm:MainViewModel x:Key="ViewModel"/>
+    </Window.Resources>
+    <StackPanel x:Name="MainStackPanel" >
+        <StackPanel Margin="5">
+            <uc:SwitchViewUC></uc:SwitchViewUC> 
+        </StackPanel>
+
+        <ScrollViewer  MaxHeight="650"  MaxWidth="1550">
+            <ItemsControl Name="lstUsers"   ItemsSource="{Binding Path=lstUsers}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="{Binding VerOrHorz, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}"
+                               VerticalAlignment="Top" 
+                               Margin="0,0,0,0" 
+                               Width="{Binding ElementName=MainStackPanel, Path=ActualWidth}" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <uc:UserData/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+        </ScrollViewer>
+    </StackPanel>
 </Window>

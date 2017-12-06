@@ -14,17 +14,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace InnoviMvvm
+namespace InnoviMvvm.Views.UserContorls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SwitchViewUC.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SwitchViewUC : UserControl
     {
-        public MainWindow()
+        public SwitchViewUC()
         {
             InitializeComponent();
-           this.DataContext = new MainViewModel();
+            this.DataContext = new MainViewModel();
         }
+
+        
     }
 }

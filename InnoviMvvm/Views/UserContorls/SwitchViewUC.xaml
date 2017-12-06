@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="InnoviMvvm.Views.UserContorls.SwitchViewUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InnoviMvvm.Views.UserContorls"
+             xmlns:vm="clr-namespace:InnoviMvvm.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="85">
+    <UserControl.Resources>
+      
+
+    </UserControl.Resources>
+
+    <StackPanel Name="MainStackPanel" HorizontalAlignment="Stretch" Orientation="Horizontal" >
+        <Button Name="btnSwitch" Command="{Binding ChangeLayoutcmd}"  >
+            <Button.Template>
+                <ControlTemplate>
+
+                    <Image x:Uid="imgSwitch" x:Name="imgSwitch" Height="50" Width="75"  Source="{Binding SwitchImageSource, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+    </StackPanel>
+
+</UserControl>

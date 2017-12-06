@@ -1,5 +1,4 @@
-﻿using InnoviMvvm.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,18 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using InnoviMvvm.ViewModels;
 
-namespace InnoviMvvm
+namespace InnoviMvvm.Views.UserContorls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SwitchUC.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SwitchUC : UserControl
     {
-        public MainWindow()
+        public SwitchUC()
         {
             InitializeComponent();
-           this.DataContext = new MainViewModel();
+            DataContext = new MainViewModel();
         }
     }
 }
