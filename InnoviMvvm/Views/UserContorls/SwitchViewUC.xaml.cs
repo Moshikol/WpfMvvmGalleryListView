@@ -24,7 +24,7 @@ namespace InnoviMvvm.Views.UserContorls
         public SwitchViewUC()
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel();
+            
         }
 
         

@@ -15,7 +15,8 @@
         <vm:MainViewModel x:Key="ViewModel"/>
     </Window.Resources>
     <StackPanel x:Name="MainStackPanel" >
-        <StackPanel Margin="5">
+        <StackPanel Orientation="Horizontal" Margin="5">
+            
             <uc:SwitchViewUC></uc:SwitchViewUC> 
         </StackPanel>
 

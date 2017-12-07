@@ -10,27 +10,28 @@ using InnoviMvvm.Views.UserContorls;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Media;
+using System.Globalization;
 
 namespace InnoviMvvm.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        public static Uri LayoutGallery
+        public static BitmapImage LayoutGallery
         {
             get
             {
-                return (new Uri(@"~\..\..\..\images\switch_on.png", UriKind.Relative));
+                return (new BitmapImage(new Uri(@"~\..\..\..\images\switch_on.png",UriKind.Relative)));
             }
         }
-        public static Uri LayoutList
+        public static BitmapImage LayoutList
         {
             get
             {
-                return (new Uri(@"~\..\..\..\images\switch_Off.png", UriKind.Relative));
+                return (new BitmapImage(new Uri(@"~\..\..\..\images\switch_off.png", UriKind.Relative)));
             }
         }
 
-        public  event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public static ChangeLayoutCommand ChangeLayoutcmd { get; set; }
 
@@ -41,7 +42,7 @@ namespace InnoviMvvm.ViewModels
 
 
         //Changes the Switch iMage accordinly to the Layout State
-        private bool _iSGallery;
+        private  static bool _iSGallery;
         public bool iSGallery
         {
             get
@@ -59,18 +60,18 @@ namespace InnoviMvvm.ViewModels
         //Setting the Switch Image Source
 
 
-        private Uri _SwitchImageSource = LayoutGallery;
-        public Uri SwitchImageSource
+        public static BitmapImage _Source = LayoutGallery;
+        public BitmapImage Source
         {
             get
-            { return _SwitchImageSource; }
+            { return _Source; }
             set
             {
-                _SwitchImageSource = value;
+                _Source = value;
 
                 if (PropertyChanged != null)
                 {
-                    PropertyChanged(this, new PropertyChangedEventArgs("SwitchImageSource"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("Source"));
                 }
 
 
@@ -79,8 +80,8 @@ namespace InnoviMvvm.ViewModels
 
 
         //Defining the Layout State
-        private static string _VerOrHorz ="Vertical";
-        public  string VerOrHorz
+        private static string _VerOrHorz = "Vertical";
+        public string VerOrHorz
         {
             get
             { return _VerOrHorz; }
@@ -96,12 +97,48 @@ namespace InnoviMvvm.ViewModels
             }
         }
 
+        private static string _ImgVisiblty = "Hidden";
+        public string ImgVisiblty
+        {
+            get
+            { return _ImgVisiblty; }
+            set
+            {
+                _ImgVisiblty = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("ImgVisiblty"));
+                }
+
+
+            }
+        }
+
+
+        private static string _ImgVisibltyOff = "Visible";
+        public string ImgVisibltyOff
+        {
+            get
+            { return _ImgVisibltyOff; }
+            set
+            {
+                _ImgVisibltyOff = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("ImgVisibltyOff"));
+                }
+
+
+            }
+        }
+
+
         protected void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
-            
-                handler(this, new PropertyChangedEventArgs(name));
-            
+
+            handler(this, new PropertyChangedEventArgs(name));
+
         }
 
         //Sets user list on UserContorl On View
@@ -135,28 +172,30 @@ namespace InnoviMvvm.ViewModels
 
         public void ChangeView()
         {
-            SwitchViewUC switchViewUC = new SwitchViewUC();
 
-         
+            
+
             if (iSGallery)
             {
+                Source = LayoutGallery;
                 VerOrHorz = "Vertical";
-
-                SwitchImageSource = LayoutGallery;
-                BitmapImage bitmapuri = new BitmapImage(new Uri(@"~\..\..\..\images\switch_on.png", UriKind.Relative));
-               // Image image = GetImage(switchViewUC);
+                ImgVisibltyOff = "Visible";
+                ImgVisiblty = "Collapsed";
+                //  BitmapImage bitmapuri = new BitmapImage(new Uri(@"~\..\..\..\images\switch_on.png", UriKind.Relative));
+                // Image image = GetImage(switchViewUC);
                 //image.Source = bitmapuri;
             }
             else
             {
+                Source = LayoutList;
                 VerOrHorz = "Horizontal";
-                SwitchImageSource = LayoutList;
-
-                BitmapImage bitmapuri = new BitmapImage(new Uri(@"~\..\..\..\images\switch_off.png", UriKind.Relative));
+                ImgVisibltyOff = "Collapsed";
+                ImgVisiblty = "Visible";
+                //  BitmapImage bitmapuri = new BitmapImage(new Uri(@"~\..\..\..\images\switch_off.png", UriKind.Relative));
                 //Image image = (Image)switchViewUC.btnSwitch.GetTemplateChild("imgSwitch", switchViewUC.btnSwitch); 
-              //  image.Source = bitmapuri;
+                //  image.Source = bitmapuri;
             }
-               
+
 
 
             this.iSGallery = !this.iSGallery;
@@ -164,17 +203,7 @@ namespace InnoviMvvm.ViewModels
         }
 
 
-        private static DependencyObject RecursiveVisualChildFinder<Image>(DependencyObject rootObject)
-        {
-            var child = VisualTreeHelper.GetChild(rootObject, 0);
-            if (child == null) return null;
-
-            return child.GetType() == typeof(Image) ? child : RecursiveVisualChildFinder<Image>(child);
-        }
-
-        private static Image GetImage(SwitchViewUC switchViewUC)
-        {
-            return (Image)switchViewUC.btnSwitch.Template.FindName("imgSwitch", switchViewUC.btnSwitch);
-        }
     }
+
+  
 }

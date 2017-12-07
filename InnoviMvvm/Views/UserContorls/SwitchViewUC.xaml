@@ -8,8 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="85">
     <UserControl.Resources>
-      
-
+        <vm:MainViewModel x:Key="ViewModel"/>
     </UserControl.Resources>
 
     <StackPanel Name="MainStackPanel" HorizontalAlignment="Stretch" Orientation="Horizontal" >
@@ -17,8 +16,7 @@
             <Button.Template>
                 <ControlTemplate>
 
-                    <Image x:Uid="imgSwitch" x:Name="imgSwitch" Height="50" Width="75"  Source="{Binding SwitchImageSource, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
-
+                    <Image x:Uid="imgSwitch" x:Name="imgSwitch" Height="50" Width="75"  Source="{Binding Source}"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
