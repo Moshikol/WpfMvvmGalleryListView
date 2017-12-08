@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Media;
 using System.Globalization;
+using System.Windows.Input;
 
 namespace InnoviMvvm.ViewModels
 {
@@ -20,17 +21,17 @@ namespace InnoviMvvm.ViewModels
         {
             get
             {
-                return (new BitmapImage(new Uri(@"~\..\..\..\images\switch_on.png",UriKind.Relative)));
+                return (new BitmapImage(new Uri(@"~\..\..\..\images\switch_off.png", UriKind.Relative)));
             }
         }
         public static BitmapImage LayoutList
         {
             get
             {
-                return (new BitmapImage(new Uri(@"~\..\..\..\images\switch_off.png", UriKind.Relative)));
+                return (new BitmapImage(new Uri(@"~\..\..\..\images\switch_on.png", UriKind.Relative)));
             }
         }
-
+        private readonly BackgroundWorker worker;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public static ChangeLayoutCommand ChangeLayoutcmd { get; set; }
@@ -38,11 +39,19 @@ namespace InnoviMvvm.ViewModels
         public MainViewModel()
         {
             ChangeLayoutcmd = new ChangeLayoutCommand(this);
+            this.worker = new BackgroundWorker();
+            this.worker.DoWork += this.DoWork;
+            this.DoWork(this, null);
+        }
+
+        private void DoWork(object sender, DoWorkEventArgs e)
+        {
+            this.lstUsers = UsersService.Instance.GetAll();
         }
 
 
         //Changes the Switch iMage accordinly to the Layout State
-        private  static bool _iSGallery;
+        private static bool _iSGallery = true;
         public bool iSGallery
         {
             get
@@ -59,7 +68,7 @@ namespace InnoviMvvm.ViewModels
         }
         //Setting the Switch Image Source
 
-
+        //Source of SwitchUC Image
         public static BitmapImage _Source = LayoutGallery;
         public BitmapImage Source
         {
@@ -80,7 +89,7 @@ namespace InnoviMvvm.ViewModels
 
 
         //Defining the Layout State
-        private static string _VerOrHorz = "Vertical";
+        private static string _VerOrHorz = "Horizontal";
         public string VerOrHorz
         {
             get
@@ -91,6 +100,23 @@ namespace InnoviMvvm.ViewModels
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("VerOrHorz"));
+                }
+
+
+            }
+        }
+
+        private static string _WindowSize;
+        public string WindowSize
+        {
+            get
+            { return _WindowSize; }
+            set
+            {
+                _WindowSize = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("WindowSize"));
                 }
 
 
@@ -146,7 +172,7 @@ namespace InnoviMvvm.ViewModels
         public IEnumerable<User> lstUsers
         {
             get
-            { return GetUsers(); }
+            { return _lstUsers; }
             set
             {
                 _lstUsers = value;
@@ -157,53 +183,39 @@ namespace InnoviMvvm.ViewModels
 
             }
         }
-        //Get users From Api
-        public IEnumerable<User> GetUsers()
-        {
-            IEnumerable<User> lstUsers;
-            lstUsers = UsersService.Instance.GetAll();
-
-
-
-            return lstUsers;
-        }
 
 
 
         public void ChangeView()
         {
 
-            
+
 
             if (iSGallery)
             {
+                WindowSize = "400";
                 Source = LayoutGallery;
                 VerOrHorz = "Vertical";
-                ImgVisibltyOff = "Visible";
-                ImgVisiblty = "Collapsed";
-                //  BitmapImage bitmapuri = new BitmapImage(new Uri(@"~\..\..\..\images\switch_on.png", UriKind.Relative));
-                // Image image = GetImage(switchViewUC);
-                //image.Source = bitmapuri;
-            }
-            else
-            {
-                Source = LayoutList;
-                VerOrHorz = "Horizontal";
-                ImgVisibltyOff = "Collapsed";
-                ImgVisiblty = "Visible";
-                //  BitmapImage bitmapuri = new BitmapImage(new Uri(@"~\..\..\..\images\switch_off.png", UriKind.Relative));
-                //Image image = (Image)switchViewUC.btnSwitch.GetTemplateChild("imgSwitch", switchViewUC.btnSwitch); 
-                //  image.Source = bitmapuri;
+
+
             }
 
+            else
+            {
+                WindowSize = "auto";
+                Source = LayoutList;
+                VerOrHorz = "Horizontal";
+
+
+            }
 
 
             this.iSGallery = !this.iSGallery;
-            Debug.WriteLine("tESTRRRRRRRRRRRR");
+
         }
 
 
     }
 
-  
+
 }
