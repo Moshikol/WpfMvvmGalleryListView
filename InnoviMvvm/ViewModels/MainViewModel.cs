@@ -21,14 +21,14 @@ namespace InnoviMvvm.ViewModels
         {
             get
             {
-                return (new BitmapImage(new Uri(@"~\..\..\..\images\switch_off.png", UriKind.Relative)));
+                return (new BitmapImage(new Uri(@"~\..\..\..\images\switch_on.png", UriKind.Relative)));
             }
         }
         public static BitmapImage LayoutList
         {
             get
             {
-                return (new BitmapImage(new Uri(@"~\..\..\..\images\switch_on.png", UriKind.Relative)));
+                return (new BitmapImage(new Uri(@"~\..\..\..\images\switch_off.png", UriKind.Relative)));
             }
         }
         private readonly BackgroundWorker worker;
@@ -50,8 +50,8 @@ namespace InnoviMvvm.ViewModels
         }
 
 
-        //Changes the Switch iMage accordinly to the Layout State
-        private static bool _iSGallery = true;
+        //Changes the Switch Image accordinly to the Layout State
+        private static bool _iSGallery = false;
         public bool iSGallery
         {
             get
@@ -66,7 +66,6 @@ namespace InnoviMvvm.ViewModels
 
             }
         }
-        //Setting the Switch Image Source
 
         //Source of SwitchUC Image
         public static BitmapImage _Source = LayoutGallery;
@@ -105,7 +104,7 @@ namespace InnoviMvvm.ViewModels
 
             }
         }
-
+        //changes the windows size accordinly to the Layout State
         private static string _WindowSize;
         public string WindowSize
         {
@@ -123,49 +122,6 @@ namespace InnoviMvvm.ViewModels
             }
         }
 
-        private static string _ImgVisiblty = "Hidden";
-        public string ImgVisiblty
-        {
-            get
-            { return _ImgVisiblty; }
-            set
-            {
-                _ImgVisiblty = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("ImgVisiblty"));
-                }
-
-
-            }
-        }
-
-
-        private static string _ImgVisibltyOff = "Visible";
-        public string ImgVisibltyOff
-        {
-            get
-            { return _ImgVisibltyOff; }
-            set
-            {
-                _ImgVisibltyOff = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("ImgVisibltyOff"));
-                }
-
-
-            }
-        }
-
-
-        protected void OnPropertyChanged(string name)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-
-            handler(this, new PropertyChangedEventArgs(name));
-
-        }
 
         //Sets user list on UserContorl On View
         private IEnumerable<User> _lstUsers;
@@ -185,31 +141,23 @@ namespace InnoviMvvm.ViewModels
         }
 
 
-
+        //Change the Layout View And The Switch Image Source
         public void ChangeView()
         {
-
-
-
-            if (iSGallery)
-            {
-                WindowSize = "400";
-                Source = LayoutGallery;
-                VerOrHorz = "Vertical";
-
-
-            }
-
-            else
+            if (iSGallery)//On Gallery Mode
             {
                 WindowSize = "auto";
-                Source = LayoutList;
+                Source = LayoutGallery;
                 VerOrHorz = "Horizontal";
-
-
             }
 
+            else // On List View Mode
+            {
+                WindowSize = "400";
+                Source = LayoutList;
+                VerOrHorz = "Vertical";
 
+            }
             this.iSGallery = !this.iSGallery;
 
         }
